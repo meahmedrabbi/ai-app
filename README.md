@@ -2,13 +2,21 @@
 
 This is a [**React Native**](https://reactnative.dev) AI chat application built with [**Expo**](https://expo.dev).
 
+## Important Note
+
+This app uses `react-native-reanimated` which requires native code. You **cannot** run this app in Expo Go. You need to:
+
+1. Use a development build with `npx expo run:android` or `npx expo run:ios`
+2. OR use an Android Emulator / iOS Simulator
+
 ## Getting Started
 
 ### Prerequisites
 
 - Node.js >= 20
 - npm or yarn
-- Expo Go app on your mobile device (for testing)
+- **For Android**: Android Studio with emulator OR physical device
+- **For iOS**: macOS with Xcode and iOS Simulator
 
 ### Installation
 
@@ -20,36 +28,49 @@ npm install
 
 ### Running the App
 
-#### Start the Development Server
+#### Option 1: Run on Android Emulator/Device (Recommended)
+
+Make sure Android Studio is installed and an emulator is running, then:
+
+```sh
+npx expo run:android
+```
+
+This will:
+- Build a development version of the app with native code
+- Install it on your emulator/device
+- Start the Metro bundler
+
+#### Option 2: Run on iOS Simulator (macOS only)
+
+Make sure Xcode is installed, then:
+
+```sh
+npx expo run:ios
+```
+
+#### Option 3: Development Server Only
 
 ```sh
 npm start
 ```
 
-This will start the Expo development server. You can then:
+Then press `a` for Android or `i` for iOS. Note: This creates a development build, not Expo Go.
 
-- Press `a` to open on Android emulator
-- Press `i` to open on iOS simulator (macOS only)
-- Scan the QR code with Expo Go app on your phone
+#### Clearing Cache
 
-#### Run on Android
+If you encounter build errors, try clearing the cache:
 
 ```sh
-npm run android
+npx expo start -c
 ```
 
-#### Run on iOS
+Or for a complete clean:
 
 ```sh
-npm run ios
-```
-
-Note: iOS development requires macOS.
-
-#### Run on Web
-
-```sh
-npm run web
+rm -rf node_modules
+npm install
+npx expo run:android
 ```
 
 ### Development
@@ -71,7 +92,8 @@ npm run web
 - **Expo SDK 54** - Development framework
 - **React Native** - Mobile framework
 - **TypeScript** - Type safety
-- **React Navigation** - Navigation
+- **React Navigation** - Navigation with Drawer
+- **React Native Reanimated** - Smooth animations
 - **Zustand** - State management
 - **Axios** - HTTP client
 - **Expo Vector Icons** - Icons
@@ -96,6 +118,18 @@ npm run web
 ├── app.json         # Expo configuration
 └── package.json     # Dependencies and scripts
 ```
+
+## Troubleshooting
+
+### Reanimated NullPointerException
+
+If you see errors related to `ReanimatedModule`, make sure you:
+
+1. Cleared the cache: `npx expo start -c`
+2. Reinstalled dependencies: `rm -rf node_modules && npm install`
+3. Used `npx expo run:android` instead of Expo Go
+
+The app uses native modules and requires a development build.
 
 ## License
 
