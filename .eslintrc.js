@@ -1,4 +1,22 @@
 module.exports = {
   root: true,
-  extends: '@react-native',
+  extends: ['eslint:recommended'],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 2021,
+    sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
+    },
+  },
+  env: {
+    'react-native/react-native': true,
+    es6: true,
+    node: true,
+  },
+  plugins: ['react', 'react-native'],
+  rules: {
+    'no-unused-vars': 'off',
+    'no-undef': 'off',
+  },
 };

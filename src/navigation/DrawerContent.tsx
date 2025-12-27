@@ -15,7 +15,7 @@ import {
   DrawerContentScrollView,
   DrawerContentComponentProps,
 } from '@react-navigation/drawer';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { MaterialIcons as Icon } from '@expo/vector-icons';
 import {useChatStore} from '../store';
 import {ChatListItem} from '../components';
 import {Colors} from '../constants';

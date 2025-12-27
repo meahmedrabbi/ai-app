@@ -1,97 +1,136 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# RTX AI - React Native Expo App
 
-# Getting Started
+This is a [**React Native**](https://reactnative.dev) AI chat application built with [**Expo**](https://expo.dev).
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## Important Note
 
-## Step 1: Start Metro
+This app uses `react-native-reanimated` which requires native code. You **cannot** run this app in Expo Go. You need to:
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+1. Use a development build with `npx expo run:android` or `npx expo run:ios`
+2. OR use an Android Emulator / iOS Simulator
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+## Getting Started
+
+### Prerequisites
+
+- Node.js >= 20
+- npm or yarn
+- **For Android**: Android Studio with emulator OR physical device
+- **For iOS**: macOS with Xcode and iOS Simulator
+
+### Installation
+
+1. Install dependencies:
 
 ```sh
-# Using npm
+npm install
+```
+
+### Running the App
+
+#### Option 1: Run on Android Emulator/Device (Recommended)
+
+Make sure Android Studio is installed and an emulator is running, then:
+
+```sh
+npx expo run:android
+```
+
+This will:
+- Build a development version of the app with native code
+- Install it on your emulator/device
+- Start the Metro bundler
+
+#### Option 2: Run on iOS Simulator (macOS only)
+
+Make sure Xcode is installed, then:
+
+```sh
+npx expo run:ios
+```
+
+#### Option 3: Development Server Only
+
+```sh
 npm start
-
-# OR using Yarn
-yarn start
 ```
 
-## Step 2: Build and run your app
+Then press `a` for Android or `i` for iOS. Note: This creates a development build, not Expo Go.
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+#### Clearing Cache
 
-### Android
+If you encounter build errors, try clearing the cache:
 
 ```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+npx expo start -c
 ```
 
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+Or for a complete clean:
 
 ```sh
-bundle install
+rm -rf node_modules
+npm install
+npx expo run:android
 ```
 
-Then, and every time you update your native dependencies, run:
+### Development
 
-```sh
-bundle exec pod install
+- **Linting**: Run `npm run lint` to check code style
+- **Testing**: Run `npm run test` to run tests
+
+## Features
+
+- AI-powered chat interface
+- Multiple conversation management
+- Settings customization
+- Dark/Light theme support
+- Persistent storage
+- Markdown message rendering
+
+## Tech Stack
+
+- **Expo SDK 54** - Development framework
+- **React Native** - Mobile framework
+- **TypeScript** - Type safety
+- **React Navigation** - Navigation with Drawer
+- **React Native Reanimated** - Smooth animations
+- **Zustand** - State management
+- **Axios** - HTTP client
+- **Expo Vector Icons** - Icons
+- **Expo Clipboard** - Clipboard functionality
+- **Expo FileSystem** - Local storage
+
+## Project Structure
+
+```
+.
+├── assets/          # Images, fonts, and other assets
+├── src/
+│   ├── components/  # Reusable UI components
+│   ├── constants/   # App constants and configuration
+│   ├── navigation/  # Navigation setup
+│   ├── screens/     # Screen components
+│   ├── services/    # API and storage services
+│   ├── store/       # State management
+│   ├── types/       # TypeScript type definitions
+│   └── utils/       # Utility functions
+├── App.tsx          # Root component
+├── app.json         # Expo configuration
+└── package.json     # Dependencies and scripts
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+## Troubleshooting
 
-```sh
-# Using npm
-npm run ios
+### Reanimated NullPointerException
 
-# OR using Yarn
-yarn ios
-```
+If you see errors related to `ReanimatedModule`, make sure you:
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+1. Cleared the cache: `npx expo start -c`
+2. Reinstalled dependencies: `rm -rf node_modules && npm install`
+3. Used `npx expo run:android` instead of Expo Go
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+The app uses native modules and requires a development build.
 
-## Step 3: Modify your app
+## License
 
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+See the [LICENSE](LICENSE) file for details.

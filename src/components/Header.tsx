@@ -5,7 +5,7 @@
 
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, Platform} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { MaterialIcons as Icon } from '@expo/vector-icons';
 import {Colors, UIConfig} from '../constants';
 
 interface HeaderProps {
@@ -43,7 +43,7 @@ const Header: React.FC<HeaderProps> = ({
             onPress={onLeftPress}
             style={styles.iconButton}
             hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
-            <Icon name={leftIcon} size={28} color={Colors.parchment} />
+            <Icon name={leftIcon as any} size={28} color={Colors.parchment} />
           </TouchableOpacity>
         )}
       </View>
