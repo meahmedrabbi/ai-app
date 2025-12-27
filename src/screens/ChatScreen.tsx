@@ -91,21 +91,6 @@ const ChatScreen: React.FC = () => {
     setCurrentChat(chatId);
   }, [createChat, setCurrentChat]);
 
-  const handleSuggestionPress = useCallback(
-    (suggestion: string) => {
-      // Create new chat and send suggestion
-      const chatId = createChat();
-      setCurrentChat(chatId);
-
-      // Small delay to ensure state is updated
-      setTimeout(() => {
-        handleSendMessage(suggestion, chatId);
-      }, 100);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [createChat, setCurrentChat],
-  );
-
   const handleSendMessage = useCallback(
     async (text: string, overrideChatId?: string) => {
       if (!apiKey) {
@@ -188,6 +173,20 @@ const ChatScreen: React.FC = () => {
       setError,
       updateChatTitle,
     ],
+  );
+
+  const handleSuggestionPress = useCallback(
+    (suggestion: string) => {
+      // Create new chat and send suggestion
+      const chatId = createChat();
+      setCurrentChat(chatId);
+
+      // Small delay to ensure state is updated
+      setTimeout(() => {
+        handleSendMessage(suggestion, chatId);
+      }, 100);
+    },
+    [createChat, setCurrentChat, handleSendMessage],
   );
 
   const handleStopGeneration = useCallback(() => {

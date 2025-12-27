@@ -3,27 +3,13 @@
  * Inter font family with various weights and sizes
  */
 
-import {Platform} from 'react-native';
-
 // Font family names - Inter font
 export const FontFamily = {
-  regular: Platform.select({
-    ios: 'Inter-Regular',
-    android: 'Inter-Regular',
-  }) as string,
-  medium: Platform.select({
-    ios: 'Inter-Medium',
-    android: 'Inter-Medium',
-  }) as string,
-  semiBold: Platform.select({
-    ios: 'Inter-SemiBold',
-    android: 'Inter-SemiBold',
-  }) as string,
-  bold: Platform.select({
-    ios: 'Inter-Bold',
-    android: 'Inter-Bold',
-  }) as string,
-};
+  regular: 'Inter-Regular',
+  medium: 'Inter-Medium',
+  semiBold: 'Inter-SemiBold',
+  bold: 'Inter-Bold',
+} as const;
 
 // Font sizes based on design specifications
 export const FontSize = {

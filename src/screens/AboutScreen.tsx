@@ -12,6 +12,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Linking,
+  Platform,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -258,8 +259,5 @@ const styles = StyleSheet.create({
     height: 40,
   },
 });
-
-// Add Platform import
-import {Platform} from 'react-native';
 
 export default AboutScreen;
