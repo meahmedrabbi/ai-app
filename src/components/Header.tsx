@@ -43,7 +43,7 @@ const Header: React.FC<HeaderProps> = ({
             onPress={onLeftPress}
             style={styles.iconButton}
             hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
-            <Icon name={leftIcon} size={28} color={Colors.parchment} />
+            <Icon name={leftIcon as any} size={28} color={Colors.parchment} />
           </TouchableOpacity>
         )}
       </View>
