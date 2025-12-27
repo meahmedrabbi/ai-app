@@ -1,19 +1,60 @@
 /**
  * RTX AI Storage Service
- * Handles persistent storage using AsyncStorage
+ * Handles persistent storage using Expo FileSystem
  */
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as FileSystem from 'expo-file-system';
 import {StorageKeys} from '../constants';
 import type {Chat, Settings} from '../types';
 
+const getFilePath = (key: string): string => {
+  return `${FileSystem.documentDirectory}${key}.json`;
+};
+
+const writeData = async (key: string, value: string): Promise<void> => {
+  try {
+    const filePath = getFilePath(key);
+    await FileSystem.writeAsStringAsync(filePath, value);
+  } catch (error) {
+    console.error(`Error writing data for key ${key}:`, error);
+    throw error;
+  }
+};
+
+const readData = async (key: string): Promise<string | null> => {
+  try {
+    const filePath = getFilePath(key);
+    const fileInfo = await FileSystem.getInfoAsync(filePath);
+    if (fileInfo.exists) {
+      return await FileSystem.readAsStringAsync(filePath);
+    }
+    return null;
+  } catch (error) {
+    console.error(`Error reading data for key ${key}:`, error);
+    return null;
+  }
+};
+
+const removeData = async (key: string): Promise<void> => {
+  try {
+    const filePath = getFilePath(key);
+    const fileInfo = await FileSystem.getInfoAsync(filePath);
+    if (fileInfo.exists) {
+      await FileSystem.deleteAsync(filePath);
+    }
+  } catch (error) {
+    console.error(`Error removing data for key ${key}:`, error);
+    throw error;
+  }
+};
+
 /**
- * Save chats to AsyncStorage
+ * Save chats to storage
  */
 export const saveChats = async (chats: Chat[]): Promise<void> => {
   try {
     const jsonValue = JSON.stringify(chats);
-    await AsyncStorage.setItem(StorageKeys.CHATS, jsonValue);
+    await writeData(StorageKeys.CHATS, jsonValue);
   } catch (error) {
     console.error('Error saving chats:', error);
     throw error;
@@ -21,11 +62,11 @@ export const saveChats = async (chats: Chat[]): Promise<void> => {
 };
 
 /**
- * Load chats from AsyncStorage
+ * Load chats from storage
  */
 export const loadChats = async (): Promise<Chat[]> => {
   try {
-    const jsonValue = await AsyncStorage.getItem(StorageKeys.CHATS);
+    const jsonValue = await readData(StorageKeys.CHATS);
     if (jsonValue !== null) {
       return JSON.parse(jsonValue) as Chat[];
     }
@@ -37,11 +78,11 @@ export const loadChats = async (): Promise<Chat[]> => {
 };
 
 /**
- * Save API key to AsyncStorage
+ * Save API key to storage
  */
 export const saveApiKey = async (apiKey: string): Promise<void> => {
   try {
-    await AsyncStorage.setItem(StorageKeys.API_KEY, apiKey);
+    await writeData(StorageKeys.API_KEY, apiKey);
   } catch (error) {
     console.error('Error saving API key:', error);
     throw error;
@@ -49,11 +90,11 @@ export const saveApiKey = async (apiKey: string): Promise<void> => {
 };
 
 /**
- * Load API key from AsyncStorage
+ * Load API key from storage
  */
 export const loadApiKey = async (): Promise<string | null> => {
   try {
-    const apiKey = await AsyncStorage.getItem(StorageKeys.API_KEY);
+    const apiKey = await readData(StorageKeys.API_KEY);
     return apiKey;
   } catch (error) {
     console.error('Error loading API key:', error);
@@ -62,11 +103,11 @@ export const loadApiKey = async (): Promise<string | null> => {
 };
 
 /**
- * Remove API key from AsyncStorage
+ * Remove API key from storage
  */
 export const removeApiKey = async (): Promise<void> => {
   try {
-    await AsyncStorage.removeItem(StorageKeys.API_KEY);
+    await removeData(StorageKeys.API_KEY);
   } catch (error) {
     console.error('Error removing API key:', error);
     throw error;
@@ -74,12 +115,12 @@ export const removeApiKey = async (): Promise<void> => {
 };
 
 /**
- * Save settings to AsyncStorage
+ * Save settings to storage
  */
 export const saveSettings = async (settings: Settings): Promise<void> => {
   try {
     const jsonValue = JSON.stringify(settings);
-    await AsyncStorage.setItem(StorageKeys.SETTINGS, jsonValue);
+    await writeData(StorageKeys.SETTINGS, jsonValue);
   } catch (error) {
     console.error('Error saving settings:', error);
     throw error;
@@ -87,11 +128,11 @@ export const saveSettings = async (settings: Settings): Promise<void> => {
 };
 
 /**
- * Load settings from AsyncStorage
+ * Load settings from storage
  */
 export const loadSettings = async (): Promise<Settings | null> => {
   try {
-    const jsonValue = await AsyncStorage.getItem(StorageKeys.SETTINGS);
+    const jsonValue = await readData(StorageKeys.SETTINGS);
     if (jsonValue !== null) {
       return JSON.parse(jsonValue) as Settings;
     }
@@ -103,14 +144,14 @@ export const loadSettings = async (): Promise<Settings | null> => {
 };
 
 /**
- * Clear all app data from AsyncStorage
+ * Clear all app data from storage
  */
 export const clearAllData = async (): Promise<void> => {
   try {
-    await AsyncStorage.multiRemove([
-      StorageKeys.CHATS,
-      StorageKeys.API_KEY,
-      StorageKeys.SETTINGS,
+    await Promise.all([
+      removeData(StorageKeys.CHATS),
+      removeData(StorageKeys.API_KEY),
+      removeData(StorageKeys.SETTINGS),
     ]);
   } catch (error) {
     console.error('Error clearing all data:', error);
@@ -119,11 +160,11 @@ export const clearAllData = async (): Promise<void> => {
 };
 
 /**
- * Clear only chats from AsyncStorage
+ * Clear only chats from storage
  */
 export const clearChats = async (): Promise<void> => {
   try {
-    await AsyncStorage.removeItem(StorageKeys.CHATS);
+    await removeData(StorageKeys.CHATS);
   } catch (error) {
     console.error('Error clearing chats:', error);
     throw error;

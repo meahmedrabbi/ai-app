@@ -17,7 +17,7 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { MaterialIcons as Icon } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
 import {useChatStore} from '../store';
 import {Colors, ModelOptions, APIConfig, AppInfo} from '../constants';
